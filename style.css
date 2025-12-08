@@ -10,3 +10,27 @@ header {
     padding: 10px 0;
     text-align: center;
 }
+
+.grille {
+  width: 840px;
+  height: 840px;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(6, 130px);
+  grid-template-rows: repeat(6, 130px);
+  gap: 0px; 
+}
+.case {
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.casee {
+  background-color: rgb(78, 83, 85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
