@@ -12,15 +12,19 @@ function updateGrid() {
         console.log("Perdu !");
         return; // on arrête la fonction, ne met pas à jour la grille
     }
-     // Retirer l'ancienne case active
-    document.querySelectorAll('.case.active').forEach(cell => {
+
+    // Retirer l'ancienne case active de toutes les cases
+    document.querySelectorAll('.case, .casee').forEach(cell => {
         cell.classList.remove('active');
     });
 
-    // Ajouter la classe à la case actuelle
-    const cell = document.querySelector(`.case[data-x='${x}'][data-y='${y}']`);
-    if(cell) cell.classList.add('active');
+    // Ajouter la classe à la case actuelle (peu importe si .case ou .casee)
+    const cell = document.querySelector(
+        `.case[data-x='${x}'][data-y='${y}'], .casee[data-x='${x}'][data-y='${y}']`
+    );
+    if (cell) cell.classList.add('active');
 }
+
 
 // Écouteur d'événements pour les touches enfoncées
 window.addEventListener('keydown', (e) => {
