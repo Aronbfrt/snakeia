@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family:Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+}
+
+a {
+    text-decoration: none;
+}
+
+.mytestbtn {
+    background-color: rgb(94, 212, 16);
+    border: none;
+    display: flex;
+    color: black;
+    padding: 40px 170px;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;     
+    height: 100vh;     
+    gap: 15px;     
+}
+
+.informationsbtn {
+    background-color: rgb(94, 212, 16);
+    border: none;
+    display: flex;
+    color: black;
+    padding: 40px 80px;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.creditbtn {
+    background-color: rgb(94, 212, 16);
+    border: none;
+    display: flex;
+    color: black;
+    padding: 40px 165px;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
