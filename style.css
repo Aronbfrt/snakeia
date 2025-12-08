@@ -12,3 +12,15 @@ header {
     text-align: center;
     
 }
+#gridSize {
+  position: absolute;
+  top: 600px;      /* distance depuis le haut de la page */
+  left: 40%;       /* centre approximatif horizontalement */
+  transform: translateX(-20%);  /* vrai centrage horizontal */
+}
+#startBtn{
+    position: absolute;
+    top: 600px;      /* distance depuis le haut de la page */
+    left: 45%;       /* centre approximatif horizontalement */
+    transform: translateX(-20%);  /* vrai centrage horizontal */
+}
