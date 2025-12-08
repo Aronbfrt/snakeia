@@ -1,30 +1,39 @@
-const keys = {};
+// Direction active : "haut", "bas", "gauche", "droite"
+let directionActive = null;
 
 window.addEventListener('keydown', (e) => {
-    if (!keys[e.key]) { // si la touche n'était pas déjà pressée
-        keys[e.key] = true;
-
-        switch(e.key) {
-            case "z":
-            case "ArrowUp":
-                console.log("Haut");
-                break;
-            case "s":
-            case "ArrowDown":
-                console.log("Bas");
-                break;
-            case "q":
-            case "ArrowLeft":
-                console.log("Gauche");
-                break;
-            case "d":
-            case "ArrowRight":
-                console.log("Droite");
-                break;
-        }
+    switch(e.key) {
+        case "z":
+        case "ArrowUp":
+            directionActive = "haut";
+            break;
+        case "s":
+        case "ArrowDown":
+            directionActive = "bas";
+            break;
+        case "q":
+        case "ArrowLeft":
+            directionActive = "gauche";
+            break;
+        case "d":
+        case "ArrowRight":
+            directionActive = "droite";
+            break;
+        default:
+            return; 
     }
+    
+    e.preventDefault(); // empêche le scroll de la page
+    console.log("Direction active :", directionActive);
 });
 
-window.addEventListener('keyup', (e) => {
-    keys[e.key] = false; // remet la touche à false quand elle est relâchée
-});
+
+function gameLoop() {
+    if (directionActive) {
+        
+    }
+    
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
