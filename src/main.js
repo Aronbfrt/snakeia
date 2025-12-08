@@ -1,39 +1,30 @@
-const keys = {
-    z: false,
-    q: false,
-    s: false,
-    d: false,
-    ArrowUp: false,
-    ArrowDown: false,
-    ArrowLeft: false,
-    ArrowRight: false
-};
-window.addEventListener("keydown", (e) => {
-    if (e.key in keys) {
+const keys = {};
+
+window.addEventListener('keydown', (e) => {
+    if (!keys[e.key]) { // si la touche n'était pas déjà pressée
         keys[e.key] = true;
-        console.log(`Key "${e.key}" pressed.`);
-    }
-});
-window.addEventListener("keyup", (e) => {
-    if (e.key in keys) {
-        keys[e.key] = true;
-        console.log(`Key "${e.key}" released.`);
+
+        switch(e.key) {
+            case "z":
+            case "ArrowUp":
+                console.log("Haut");
+                break;
+            case "s":
+            case "ArrowDown":
+                console.log("Bas");
+                break;
+            case "q":
+            case "ArrowLeft":
+                console.log("Gauche");
+                break;
+            case "d":
+            case "ArrowRight":
+                console.log("Droite");
+                break;
+        }
     }
 });
 
-function gameLoop() {
-    if (keys.z || keys.ArrowUp) {
-        console.log("Move Up");
-    }
-    if (keys.s || keys.ArrowDown) {
-        console.log("Move Down");
-    }
-    if (keys.q || keys.ArrowLeft) {
-        console.log("Move Left");
-    }
-    if (keys.d || keys.ArrowRight) {
-        console.log("Move Right");
-    }
-    requestAnimationFrame(gameLoop);
-}
-gameLoop();
+window.addEventListener('keyup', (e) => {
+    keys[e.key] = false; // remet la touche à false quand elle est relâchée
+});
