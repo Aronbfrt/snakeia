@@ -1,3 +1,8 @@
+let x = 2; // position initiale
+let y = 3; // position initiale
+const GRID_SIZE = 6; // 6x6
+
+
 // Direction active : "haut", "bas", "gauche", "droite"
 let directionActive = null;
 
