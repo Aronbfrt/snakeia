@@ -9,18 +9,18 @@ header {
     color: rgb(0, 0, 0);
     padding: 10px 0;
     text-align: center;
-    border-bottom: black 5px solid;
+    border-bottom: black 3.5px solid;
 }
 
 .grille {
-  width: 780px;
-  height: 780px;
+  width: 720px;
+  height: 72àpx;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(6, 130px);
-  grid-template-rows: repeat(6, 130px);
+  grid-template-columns: repeat(9, 80px);
+  grid-template-rows: repeat(9, 80px);
   gap: 0px; 
-  border: 5px solid black;     
+  border: 3.5px solid black;     
 }
 .case {
   background-color: rgb(169, 212, 16);
