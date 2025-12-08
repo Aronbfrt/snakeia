@@ -119,4 +119,3 @@ Une fois que tu as tout ça, ton jeu est fonctionnel ! Tu peux ensuite l'amélio
 - Augmenter la vitesse quand le score augmente.
 - Ajouter un écran de démarrage.
 - Changer les couleurs ou les "skins".
- sxcdvfhj, 
