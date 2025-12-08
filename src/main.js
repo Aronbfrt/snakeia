@@ -38,4 +38,9 @@ function gameLoop() {
 }
 
 // Démarre la boucle de jeu
-gameLoop();
+// Démarre la boucle de jeu uniquement si une touche est pressée
+window.addEventListener('keydown', () => {
+    if (!directionActive) {
+        gameLoop();
+    }
+});
