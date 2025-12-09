@@ -44,12 +44,16 @@ header {
 }
 
 .active {
-    background-color: blue;
+    background-color: rgb(63, 1, 179);
+    border: 3px solid rgb(33, 0, 100);   /* bord plus foncé */
+}
 
-}
-.fruit {
-    background-color: red ; 
-}
 .trail {
-    background-color: blue ;
+    background-color: rgb(0, 0, 200);    /* bleu cohérent */
+    border: 2px solid rgb(0, 0, 120);    /* bord plus foncé */
+}
+
+.fruit {
+    background-color: red;
+    border: 3px solid brown;             /* bord plus foncé */
 }
