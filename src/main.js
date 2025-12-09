@@ -49,21 +49,27 @@ let fruitX, fruitY;
 
 // Place un fruit aléatoire sur la grille (jamais à la position du joueur)
 function placerFruit() {
-    // Générer une position aléatoire jusqu'à ne pas chevaucher le joueur
     do {
         fruitX = Math.floor(Math.random() * GRID_SIZE);
         fruitY = Math.floor(Math.random() * GRID_SIZE);
-    } while (fruitX === x && fruitY === y);
 
-    // Retirer la classe fruit de tous les éléments
+    } while (
+        // Pas sur la tête
+        (fruitX === x && fruitY === y) ||
+        // Pas sur un segment du corps
+        AnciennePosition.some(pos => pos.x === fruitX && pos.y === fruitY)
+    );
+
+    // Retirer les anciens fruits
     document.querySelectorAll('.fruit').forEach(cell => cell.classList.remove('fruit'));
 
-    // Ajouter la classe fruit à la nouvelle case
+    // Ajouter le nouveau fruit
     const fruitCell = document.querySelector(
         `.case[data-x='${fruitX}'][data-y='${fruitY}'], .casee[data-x='${fruitX}'][data-y='${fruitY}']`
     );
     if (fruitCell) fruitCell.classList.add('fruit');
 }
+
 
 // Met à jour l'affichage de la grille
 function updateGrid() {
