@@ -11,7 +11,7 @@ let AnciennePosition = []; // Historique des positions
 
 // Configuration du jeu
 const GRID_SIZE = 6; // Grille de 6x6 cases
-const VITESSE = 1000; // Vitesse de déplacement en millisecondes
+const VITESSE = 500; // Vitesse de déplacement en millisecondes
 
 // Variables de direction et score
 let directionActive = null; // Direction active : "haut", "bas", "gauche", "droite"
