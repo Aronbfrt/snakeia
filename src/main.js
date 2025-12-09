@@ -7,7 +7,7 @@ const START_X = 2;
 const START_Y = 3;
 
 // Configuration du jeu
-const GRID_SIZE = 9; // Grille de 9x9 cases
+const GRID_SIZE = 6; // Grille de 6x6 cases
 const VITESSE = 500; // Vitesse de déplacement en millisecondes
 
 // Variables de direction et score
