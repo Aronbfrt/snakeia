@@ -11,7 +11,7 @@ let AnciennePosition = []; // Historique des positions
 
 // Configuration du jeu
 const GRID_SIZE = 6; // Grille de 6x6 cases
-const VITESSE = 600; // Vitesse de déplacement en millisecondes
+const VITESSE = 800; // Vitesse de déplacement en millisecondes
 
 // Variables de direction et score
 let directionActive = null; // Direction active : "haut", "bas", "gauche", "droite"
@@ -35,7 +35,7 @@ function logPosition(OldX, OldY) {
 function resetGame() {
     x = START_X; // Réinitialiser la position X
     y = START_Y; // Réinitialiser la position Y
-    directionActive = "bas"; // Arrêter tout mouvement
+    directionActive = ""; // Arrêter tout mouvement
     Score = 0; // Réinitialiser le score
     document.getElementById('score').innerText = `Score: ${Score}`; // Mettre à jour l'affichage du score
     AnciennePosition = []; // Réinitialiser les anciennes positions
@@ -131,7 +131,7 @@ function deplacer() {
     let OldX = x; // Ancienne position X
     let OldY = y; // Ancienne position Y   
     // Modifier la position selon la direction
-    if (directionActive == "") {
+    if (directionActive) {
         switch (directionActive) {
             case "haut": y--; break;
             case "bas": y++; break;
@@ -142,9 +142,7 @@ function deplacer() {
 
     logPosition(OldX, OldY); // Log les anciennes positions
     updateGrid(); // Mettre à jour l'affichage
-    if (directionActive != "") {
-        directionActive = "";
-    }
+
 
 
 }
@@ -171,6 +169,7 @@ window.addEventListener('keydown', (e) => {
     }
 
     directionActive = newDirection;
+    deplacer(); // Déplacer immédiatement après le changement de direction
 });
 
 
