@@ -5,13 +5,13 @@ let y = 3; // position initiale
 // Constantes pour réinitialiser le jeu
 const START_X = 2;
 const START_Y = 3;
-
+let inputLocked = false;
 
 let AnciennePosition = []; // Historique des positions
 
 // Configuration du jeu
 const GRID_SIZE = 6; // Grille de 6x6 cases
-const VITESSE = 800; // Vitesse de déplacement en millisecondes
+const VITESSE = 500; // Vitesse de déplacement en millisecondes
 
 // Variables de direction et score
 let directionActive = null; // Direction active : "haut", "bas", "gauche", "droite"
@@ -121,6 +121,10 @@ function updateGrid() {
             }
         }
     });
+    if (Score === (GRID_SIZE * GRID_SIZE) - 1) {
+        alert("Gagné !");
+        resetGame();
+    }
 }
 
 // Déplace le joueur selon la direction active
@@ -142,7 +146,7 @@ function deplacer() {
 
     logPosition(OldX, OldY); // Log les anciennes positions
     updateGrid(); // Mettre à jour l'affichage
-
+    inputLocked = false;
 
 
 }
@@ -150,6 +154,7 @@ function deplacer() {
 // Écouteur d'événements pour les touches du clavier
 window.addEventListener('keydown', (e) => {
     let newDirection = null;
+    if (inputLocked) return;
 
     switch (e.key) {
         case "z": case "ArrowUp": newDirection = "haut"; break;
@@ -159,6 +164,7 @@ window.addEventListener('keydown', (e) => {
     }
 
     if (!newDirection) return;
+    inputLocked = true;
     if (
         (directionActive === "haut" && newDirection === "bas") ||
         (directionActive === "bas" && newDirection === "haut") ||
@@ -169,7 +175,7 @@ window.addEventListener('keydown', (e) => {
     }
 
     directionActive = newDirection;
-    deplacer(); // Déplacer immédiatement après le changement de direction
+    
 });
 
 
