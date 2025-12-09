@@ -6,12 +6,12 @@ let y = 3; // position initiale
 const START_X = 2;
 const START_Y = 3;
 
- 
+
 let AnciennePosition = []; // Historique des positions
 
 // Configuration du jeu
 const GRID_SIZE = 6; // Grille de 6x6 cases
-const VITESSE = 500; // Vitesse de déplacement en millisecondes
+const VITESSE = 600; // Vitesse de déplacement en millisecondes
 
 // Variables de direction et score
 let directionActive = null; // Direction active : "haut", "bas", "gauche", "droite"
@@ -19,8 +19,8 @@ let Score = 0; // Score actuel du joueur
 
 function logPosition(OldX, OldY) {
     // Ajouter la nouvelle tête
-    AnciennePosition.unshift({x: OldX, y: OldY}); 
-    
+    AnciennePosition.unshift({ x: OldX, y: OldY });
+
     // Si la taille dépasse Score, enlever la dernière
     if (AnciennePosition.length > Score) {
         AnciennePosition.pop();
@@ -35,13 +35,13 @@ function logPosition(OldX, OldY) {
 function resetGame() {
     x = START_X; // Réinitialiser la position X
     y = START_Y; // Réinitialiser la position Y
-    directionActive = null; // Arrêter tout mouvement
+    directionActive = "bas"; // Arrêter tout mouvement
     Score = 0; // Réinitialiser le score
     document.getElementById('score').innerText = `Score: ${Score}`; // Mettre à jour l'affichage du score
     AnciennePosition = []; // Réinitialiser les anciennes positions
     updateGrid(); // Redessiner la grille
     placerFruit(); // Placer un nouveau fruit
-    
+
 }
 
 // Variables pour la position du fruit
@@ -73,17 +73,9 @@ function placerFruit() {
 
 // Met à jour l'affichage de la grille
 function updateGrid() {
-    // Vérifier si le joueur est sorti de la grille
-    if (x < 0 || x >= GRID_SIZE || y < 0 || y >= GRID_SIZE) {
-        alert("Perdu !"); // Afficher un message de défaite
-        resetGame(); // Réinitialiser le jeu
-    }
 
-    // On ignore l'index 0 car c'est la tête
-    if (AnciennePosition.slice(1).some(pos => pos.x === x && pos.y === y)) {
-        alert("Perdu !");
-        resetGame();
-    }
+
+
     // Retirer la classe active de toutes les cases
     document.querySelectorAll('.case, .casee').forEach(cell => {
         cell.classList.remove('active');
@@ -107,55 +99,75 @@ function updateGrid() {
     if (x === fruitX && y === fruitY) {
         placerFruit(); // Placer un nouveau fruit
         Score++; // Augmenter le score
-        
+
         document.getElementById('score').innerText = `Score: ${Score}`; // Mettre à jour l'affichage
         console.log("Fruit mangé ! Score :", Score); // Log dans la console
     }
+
+    // Vérifier si le joueur est sorti de la grille
+    if (x < 0 || x >= GRID_SIZE || y < 0 || y >= GRID_SIZE) {
+        alert("Perdu !"); // Afficher un message de défaite
+        resetGame(); // Réinitialiser le jeu
+    }
+
+
+
+    AnciennePosition.forEach(posPosition => {
+
+        if (posPosition != AnciennePosition[0]) {
+            if (x === posPosition.x && y === posPosition.y) {
+                alert("Perdu !");
+                resetGame();
+            }
+        }
+    });
 }
 
 // Déplace le joueur selon la direction active
 function deplacer() {
-    if (!directionActive) return; // Ne rien faire si aucune direction n'est active
-    
+
+
 
     let OldX = x; // Ancienne position X
     let OldY = y; // Ancienne position Y   
     // Modifier la position selon la direction
-    switch(directionActive) {
-        case "haut": y--; break;
-        case "bas": y++; break;
-        case "gauche": x--; break;
-        case "droite": x++; break;
+    if (directionActive == "") {
+        switch (directionActive) {
+            case "haut": y--; break;
+            case "bas": y++; break;
+            case "gauche": x--; break;
+            case "droite": x++; break;
+        }
     }
-   
+
     logPosition(OldX, OldY); // Log les anciennes positions
     updateGrid(); // Mettre à jour l'affichage
-    
+    if (directionActive != "") {
+        directionActive = "";
+    }
+
+
 }
 
 // Écouteur d'événements pour les touches du clavier
 window.addEventListener('keydown', (e) => {
     let newDirection = null;
 
-    switch(e.key) {
-        case "z": case "ArrowUp":    newDirection = "haut"; break;
-        case "s": case "ArrowDown":  newDirection = "bas"; break;
-        case "q": case "ArrowLeft":  newDirection = "gauche"; break;
+    switch (e.key) {
+        case "z": case "ArrowUp": newDirection = "haut"; break;
+        case "s": case "ArrowDown": newDirection = "bas"; break;
+        case "q": case "ArrowLeft": newDirection = "gauche"; break;
         case "d": case "ArrowRight": newDirection = "droite"; break;
     }
 
     if (!newDirection) return;
-
-    // EMPÊCHER LE DEMI-TOUR
-    if (Score > 0) {
-        if (
-            (directionActive === "haut"    && newDirection === "bas") ||
-            (directionActive === "bas"     && newDirection === "haut") ||
-            (directionActive === "gauche"  && newDirection === "droite") ||
-            (directionActive === "droite"  && newDirection === "gauche")
-        ) {
-            return; // On ignore le demi-tour
-        }
+    if (
+        (directionActive === "haut" && newDirection === "bas") ||
+        (directionActive === "bas" && newDirection === "haut") ||
+        (directionActive === "gauche" && newDirection === "droite") ||
+        (directionActive === "droite" && newDirection === "gauche")
+    ) {
+        return; // On ignore le demi-tour
     }
 
     directionActive = newDirection;
