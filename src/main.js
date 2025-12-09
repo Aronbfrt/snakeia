@@ -6,6 +6,9 @@ let y = 3; // position initiale
 const START_X = 2;
 const START_Y = 3;
 
+ 
+let AnciennePosition = []; // Historique des positions
+
 // Configuration du jeu
 const GRID_SIZE = 6; // Grille de 6x6 cases
 const VITESSE = 500; // Vitesse de déplacement en millisecondes
@@ -14,6 +17,20 @@ const VITESSE = 500; // Vitesse de déplacement en millisecondes
 let directionActive = null; // Direction active : "haut", "bas", "gauche", "droite"
 let Score = 0; // Score actuel du joueur
 
+function logPosition(OldX, OldY) {
+    // Ajouter la nouvelle tête
+    AnciennePosition.unshift({x: OldX, y: OldY}); 
+    
+    // Si la taille dépasse Score, enlever la dernière
+    if (AnciennePosition.length > Score) {
+        AnciennePosition.pop();
+    }
+
+    console.log("Anciennes positions :", AnciennePosition);
+}
+
+
+
 // Réinitialise le jeu à l'état initial
 function resetGame() {
     x = START_X; // Réinitialiser la position X
@@ -21,8 +38,10 @@ function resetGame() {
     directionActive = null; // Arrêter tout mouvement
     Score = 0; // Réinitialiser le score
     document.getElementById('score').innerText = `Score: ${Score}`; // Mettre à jour l'affichage du score
+    AnciennePosition = []; // Réinitialiser les anciennes positions
     updateGrid(); // Redessiner la grille
     placerFruit(); // Placer un nouveau fruit
+    
 }
 
 // Variables pour la position du fruit
@@ -54,9 +73,15 @@ function updateGrid() {
         resetGame(); // Réinitialiser le jeu
     }
 
+    // On ignore l'index 0 car c'est la tête
+    if (AnciennePosition.slice(1).some(pos => pos.x === x && pos.y === y)) {
+        alert("Perdu !");
+        resetGame();
+    }
     // Retirer la classe active de toutes les cases
     document.querySelectorAll('.case, .casee').forEach(cell => {
         cell.classList.remove('active');
+        cell.classList.remove('trail');
     });
 
     // Ajouter la classe active à la position actuelle du joueur
@@ -65,10 +90,18 @@ function updateGrid() {
     );
     if (cell) cell.classList.add('active');
 
+    AnciennePosition.forEach(pos => {
+        const oldCell = document.querySelector(
+            `.case[data-x='${pos.x}'][data-y='${pos.y}'], .casee[data-x='${pos.x}'][data-y='${pos.y}']`
+        );
+        if (oldCell) oldCell.classList.add('trail'); // <-- carré bleu
+    });
+
     // Vérifier si le joueur a mangé le fruit
     if (x === fruitX && y === fruitY) {
         placerFruit(); // Placer un nouveau fruit
         Score++; // Augmenter le score
+        
         document.getElementById('score').innerText = `Score: ${Score}`; // Mettre à jour l'affichage
         console.log("Fruit mangé ! Score :", Score); // Log dans la console
     }
@@ -78,6 +111,9 @@ function updateGrid() {
 function deplacer() {
     if (!directionActive) return; // Ne rien faire si aucune direction n'est active
     
+
+    let OldX = x; // Ancienne position X
+    let OldY = y; // Ancienne position Y   
     // Modifier la position selon la direction
     switch(directionActive) {
         case "haut": y--; break;
@@ -85,8 +121,10 @@ function deplacer() {
         case "gauche": x--; break;
         case "droite": x++; break;
     }
-    
+   
+    logPosition(OldX, OldY); // Log les anciennes positions
     updateGrid(); // Mettre à jour l'affichage
+    
 }
 
 // Écouteur d'événements pour les touches du clavier
