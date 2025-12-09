@@ -135,14 +135,32 @@ function deplacer() {
 
 // Écouteur d'événements pour les touches du clavier
 window.addEventListener('keydown', (e) => {
-    // Mapper les touches Z/S/Q/D et les flèches aux directions
+    let newDirection = null;
+
     switch(e.key) {
-        case "z": case "ArrowUp": directionActive = "haut"; break;
-        case "s": case "ArrowDown": directionActive = "bas"; break;
-        case "q": case "ArrowLeft": directionActive = "gauche"; break;
-        case "d": case "ArrowRight": directionActive = "droite"; break;
+        case "z": case "ArrowUp":    newDirection = "haut"; break;
+        case "s": case "ArrowDown":  newDirection = "bas"; break;
+        case "q": case "ArrowLeft":  newDirection = "gauche"; break;
+        case "d": case "ArrowRight": newDirection = "droite"; break;
     }
+
+    if (!newDirection) return;
+
+    // EMPÊCHER LE DEMI-TOUR
+    if (Score > 0) {
+        if (
+            (directionActive === "haut"    && newDirection === "bas") ||
+            (directionActive === "bas"     && newDirection === "haut") ||
+            (directionActive === "gauche"  && newDirection === "droite") ||
+            (directionActive === "droite"  && newDirection === "gauche")
+        ) {
+            return; // On ignore le demi-tour
+        }
+    }
+
+    directionActive = newDirection;
 });
+
 
 // Appeler la fonction deplacer toutes les VITESSE millisecondes
 setInterval(deplacer, VITESSE);
